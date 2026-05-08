@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Smart Irrigation AI</title>
+    <!-- We can use the same style.css file -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="login-body">
+
+    <div class="login-container">
+        <form method="POST">
+            <h2>Smart Irrigation AI</h2>
+            <p>Please log in to continue</p>
+            
+            <!-- This will show an error message if the password was wrong -->
+            {% if error %}
+                <p class="login-error">{{ error }}</p>
+            {% endif %}
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" required>
+            </div>
+            <button type="submit" class="login-button">Login</button>
+        </form>
+    </div>
+
+</body>
+</html>

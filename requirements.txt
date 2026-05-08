@@ -1,0 +1,28 @@
+# Core Python
+numpy
+pandas
+
+# Deep Learning
+tensorflow
+torch
+torchvision
+
+# Image Processing
+opencv-python
+Pillow
+
+# Web Applications
+flask
+flask-cors
+streamlit
+
+# IoT / Serial Communication
+pyserial
+
+# Visualization
+matplotlib
+seaborn
+
+# Machine Learning Utilities
+scikit-learn
+tqdm

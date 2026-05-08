@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Irrigation AI</title>
+    
+    <!-- This is the corrected link for style.css -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    
+    <!-- Google Icons (This link was always correct) -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <!-- Chart.js Library (This link was always correct) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Smart Irrigation AI</h2>
+            </div>
+            <ul class="sidebar-nav">
+                <li class="nav-item active" data-page="dashboard">
+                    <span class="material-symbols-outlined">dashboard</span>
+                    <span class="nav-text">Dashboard</span>
+                </li>
+                <li class="nav-item" data-page="irrigation-control">
+                    <span class="material-symbols-outlined">water_drop</span>
+                    <span class="nav-text">Irrigation Control</span>
+                </li>
+                <li class="nav-item" data-page="reports">
+                    <span class="material-symbols-outlined">analytics</span>
+                    <span class="nav-text">Reports</span>
+                </li>
+                <li class="nav-item" data-page="settings">
+                    <span class="material-symbols-outlined">settings</span>
+                    <span class="nav-text">Settings</span>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="main-header">
+                <h1 id="page-title">Dashboard</h1>
+                <div class="header-icons">
+                    <span id="profile-icon" class="material-symbols-outlined" style="cursor: pointer;">person</span>
+                    <span class="material-symbols-outlined">notifications</span>
+                </div>
+            </header>
+            
+            <!-- Profile Dropdown Menu -->
+            <div id="profile-dropdown" class="profile-dropdown">
+                <div class="dropdown-item">View Profile</div>
+                <div id="logout-button" class="dropdown-item">Log Out</div>
+            </div>
+            
+            <!-- Page Content -->
+            <div class="page-wrapper">
+                
+                <!-- Dashboard Page -->
+                <section class="page" id="dashboard">
+                    <div class="grid-container">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>Soil Moisture</h3>
+                                <span class="material-symbols-outlined text-secondary">sync</span>
+                            </div>
+                            <p id="dashboard-soil-moisture" class="card-metric-value">0%</p>
+                        </div>
+                        <div class="card">
+                             <div class="card-header">
+                                <h3>Pump Status</h3>
+                                <span class="material-symbols-outlined text-secondary">show_chart</span>
+                            </div>
+                            <p id="dashboard-pump-status" class="card-metric-value status-off">OFF</p>
+                        </div>
+                    </div>
+                    <div class="grid-container full-width">
+                        <div class="card">
+                            <h3>Moisture Trend</h3>
+                            <div class="chart-container">
+                                <canvas id="dashboardMoistureChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Irrigation Control Page -->
+                <section class="page" id="irrigation-control">
+                    <div class="grid-container">
+                        <div class="card">
+                            <h3><span class="material-symbols-outlined">tune</span>Mode Control</h3>
+                            <p>Switch between automatic and manual mode</p>
+                            <div class="toggle-control">
+                                <label class="switch">
+                                    <input type="checkbox" id="mode-toggle" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                                <span id="mode-toggle-status">Mode: AUTO</span>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <h3><span class="material-symbols-outlined">power_settings_new</span>Pump Control</h3>
+                            <p>Manually turn irrigation pump on or off</p>
+                            <div class="toggle-control">
+                                <label class="switch">
+                                    <input type="checkbox" id="pump-toggle">
+                                    <span class="slider round"></span>
+                                </label>
+                                <span id="pump-toggle-status">Status: OFF</span>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="grid-container">
+                        <div class="card">
+                            <h3><span class="material-symbols-outlined">developer_board</span>Arduino Status</h3>
+                            <p>Connection status of the Arduino device</p>
+                            <div id="arduino-status-indicator" class="status-indicator">
+                                <span class="status-icon error"></span>
+                                <span id="arduino-status-text">Not Connected</span>
+                            </div>
+                        </div>
+                         <div class="card">
+                             <h3>System Status</h3>
+                             <div class="system-status-container">
+                                 <div id="system-status-arduino" class="status-item">
+                                     <span class="status-dot error"></span> Arduino
+                                 </div>
+                                  <div id="system-status-pump" class="status-item">
+                                     <span class="status-dot error"></span> Pump
+                                 </div>
+                                  <div id="system-status-db" class="status-item">
+                                     <span class="status-dot ok"></span> Database
+                                 </div>
+                             </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Reports Page -->
+                <!-- THIS IS THE FIX: 'in="reports"' is changed to 'id="reports"' -->
+                <section class="page" id="reports">
+                    <div class="grid-container full-width">
+                        <div class="card">
+                            <h3>Weekly Moisture Levels</h3>
+                             <div class="chart-container">
+                                <canvas id="moistureChart"></canvas>
+                             </div>
+                        </div>
+                    </div>
+                    <div class="grid-container full-width">
+                        <div class="card">
+                            <h3>Weekly Water Usage (Liters)</h3>
+                             <div class="chart-container">
+                                <canvas id="waterUsageChart"></canvas>
+                             </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Settings Page -->
+                <section class="page" id="settings">
+                    <div class="grid-container">
+                        <div class="card">
+                            <h3><span class="material-symbols-outlined">dark_mode</span>Theme</h3>
+                            <p>Toggle between dark and light mode</p>
+                            <div class="toggle-control">
+                                <label class="switch">
+                                    <input type="checkbox" id="theme-toggle" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                                <span id="theme-toggle-status">Current: Dark Mode</span>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <h3><span class="material-symbols-outlined">notifications_active</span>Notifications</h3>
+                            <p>Enable or disable system notifications</p>
+                             <div class="toggle-control">
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                                <span>Status: ENABLED</span>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="grid-container full-width">
+                        <div class="card">
+                             <h3>Connection</h3>
+                             <div class="form-group">
+                                 <label for="api-url">Backend API URL</label>
+                                 <input type="text" id="api-url" value="http://localhost:5000">
+                             </div>
+                              <div class="form-group">
+                                 <label for="arduino-ip">Arduino Device IP</label>
+                                 <input type="text" id="arduino-ip" value="192.168.1.100">
+                             </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- This is the corrected link for script.js -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
